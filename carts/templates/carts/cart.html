@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="welcome">
+    <div class="upper-line"></div>
+    Your  <span>Cart</span>
+    <div class="lower-line"></div>
+</div>
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-10 col-12 mt-5 mr-auto ml-auto">
+            {% if cart.products.exists %}
+            <table class="table table-bordered">
+                <thead>
+                  <tr style="font-family: 'Oswald', sans-serif;font-size:24px; line-height:36px;">
+                    <th scope="col">#</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Product Price</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for product in cart.products.all %}
+                  <tr style="font-family: 'Oswald', sans-serif;font-size:20px; line-height:24px;">
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ product.title }}</td>
+                    <td>{% if product.discount_price %}
+                          {{ product.discount_price }}
+                        {% else %}
+                          {{ product.price }}
+                        {% endif %}
+                      <i class="fas fa-euro-sign" style="font-size:16px;"></i></td>
+                    <td>{% include 'carts/snippets/remove.html' %}</td>
+                  </tr>
+                  {% endfor %}
+                  <tr style="font-family: 'Oswald', sans-serif;font-size:20px; line-height:24px; font-weight: 800;">
+                    <td colspan="3"><b>Total</b></td>
+                    <td><b>{{ cart.total }}   <i class="fas fa-dollar-sign" ></i></b></td>
+                  </tr>
+                  <tr>
+                    <td colspan='3'></td>
+                    <td><a href="{% url 'checkout' %}" class="btn btn-block btn-success">Checkout</a></td>
+                  </tr>
+                </tbody>
+              </table>
+              {% endif %}
+        </div>
+    </div>
+{% endblock %}

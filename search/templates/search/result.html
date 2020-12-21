@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="welcome">
+    <div class="upper-line"></div>
+    {% if query %}
+        Result: <span>{{ query }}</span>
+    {% endif %}
+    <div class="lower-line"></div>
+</div>
+{% if object_list %}
+    <div class="row mt-5">
+        {% for obj in object_list %}
+        <div class="col-lg-3 col-md-6 col-sm-10 col-12 mr-auto ml-auto mt-3 mb-3">
+            <div class="arrival">
+                <div class="arrival-upper">
+                    <img src="{{ obj.image.url }}" alt="">
+                </div>
+                <div class="arrival-lower">
+                    <div class="arrival-lower-upper">
+                        <h1><a href="{% url 'product_detail' obj.slug %}">{{ obj.title }}</a></h1>
+                    </div>
+                    <h2 class="prod-author">By <span>{{ obj.author.name }}</span></h2>
+                    <!-- <div class="rating">
+                        <ul class="rating-ul">
+                            <li><img src="images/star.png" alt=""></li>
+                            <li><img src="images/star.png" alt=""></li>
+                            <li><img src="images/star.png" alt=""></li>
+                            <li><img src="images/star.png" alt=""></li>
+                            <li><img src="images/no-star.png" alt=""></li>
+                        </ul>
+                    </div> -->
+                    <div class="desc">
+                        {{ obj.short_desc }}
+                    </div>
+                    <div class="arrival-lower-lower">
+                        {% if obj.discount_price %}
+                        <div class="price"><strike>${{ obj.price }}</strike><span>${{ obj.discount_price }}</span> </div>
+                        {% else %}
+                            <div class="price">${{ obj.price }}</div>
+                        {% endif %}
+                        <a class="add-to-cart" href=''><i class="fas fa-shopping-basket"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+{% endblock %}

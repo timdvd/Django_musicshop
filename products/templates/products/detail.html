@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 class="mb-5 product-main-heading">Product</h1>
+<div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12 col-12 mr-auto ml-auto">
+        <div class="product-main-image">
+            <img src="{{ product.image.url }}" alt="">
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-6 col-sm-12 col-12 mr-auto ml-auto mb-5">
+        <div class="product-main-text">
+            <h1 class="product-main-text-title">
+                {{ product.title }}
+            </h1>
+            <h2 class="product-main-text-author mt-2">
+                <span class="mr-2">Author:</span>  {{ product.author.name|capfirst }}
+            </h2>
+            <h3 class="product-main-text-category">
+                <span class="mr-2">Category:</span> {{ product.category|capfirst }}
+            </h3>
+            <h3 class="product-main-text-price">
+                <span class="mr-2">Price:</span> ${{ product.price }}
+            </h3>
+            <!-- <div class="rating">
+                <ul class="rating-ul">
+                    <li><img src="images/star.png" alt=""></li>
+                    <li><img src="images/star.png" alt=""></li>
+                    <li><img src="images/star.png" alt=""></li>
+                    <li><img src="images/star.png" alt=""></li>
+                    <li><img src="images/no-star.png" alt=""></li>
+                </ul>
+            </div> -->
+            <p class="product-main-text-desc mt-2">
+                {{ product.description }}
+            </p>
+            <div class="product-main-actions mt-3">
+                <a href="{% url 'cart_update' product.slug %}" class="product-main-text-cart"><i class="fas fa-shopping-basket"></i></a>
+                <a href="#" class="product-main-text-buy">Buy Now</a>
+            </div>
+        </div>
+        {% if product.category == 'album' %}
+            {% if product.songs %}
+            <table class="table table-bordered mt-4">
+                <thead>
+                <tr style="font-family: Arial, Helvetica, sans-serif;font-size:20px; line-height:28px;">
+                    <th scope="col" style="text-align: center;">#</th>
+                    <th scope="col">Product Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for song in product.songs.all %}
+                <tr style="font-family: Arial, Helvetica, sans-serif;font-size:16px; line-height:20px;">
+                    <th scope="row" style="text-align: center;">{{ forloop.counter }}</th>
+                    <td>{{ song.title }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

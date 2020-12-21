@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="welcome">
+    <div class="upper-line"></div>
+    All  <span>Albums</span>
+    <div class="lower-line"></div>
+</div>
+    {% if albums %}
+    <div class="row mt-5">
+        {% for album in albums %}
+        <div class="col-lg-3 col-md-6 col-sm-10 col-12 mr-auto ml-auto">
+            <div class="arrival">
+                <div class="arrival-upper">
+                    <img src="{{ album.image.url }}" alt="">
+                </div>
+                <div class="arrival-lower">
+                    <div class="arrival-lower-upper">
+                        <h1><a href="{% url 'product_detail' album.slug %}">{{ album.title }}</a></h1>
+                    </div>
+                    <h2 class="prod-author">By <span>{{ album.author.name }}</span></h2>
+                    <!-- <div class="rating">
+                        <ul class="rating-ul">
+                            <li><img src="images/star.png" alt=""></li>
+                            <li><img src="images/star.png" alt=""></li>
+                            <li><img src="images/star.png" alt=""></li>
+                            <li><img src="images/star.png" alt=""></li>
+                            <li><img src="images/no-star.png" alt=""></li>
+                        </ul>
+                    </div> -->
+                    <div class="desc">
+                        {{ album.short_desc }}
+                    </div>
+                    <div class="arrival-lower-lower">
+                        {% if album.discount_price %}
+                        <div class="price"><strike>${{ album.price }}</strike><span>${{ album.discount_price }}</span> </div>
+                        {% else %}
+                            <div class="price">${{ album.price }}</div>
+                        {% endif %}
+                        <a class="add-to-cart" href="{% url 'cart_update' album.slug %}"><i class="fas fa-shopping-basket"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}
